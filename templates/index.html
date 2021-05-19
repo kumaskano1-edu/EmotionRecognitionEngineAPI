@@ -48,22 +48,50 @@
 
         // Messenger Functions
         function sendMessage(){
-        var msg = input.value;
-        input.value = ''
-        writeLine(msg)
+            var msg = input.value;
+            input.value = ''
+            writeLine(msg)
         }
         function addMessage(evt){
-        console.log(evt);
-        var msg = evt.data ? JSON.parse(evt.data) : evt;
-        writeLine(`${msg.FROM}: ${msg.MESSAGE}`)
+            console.log(evt);
+            var msg = evt.data ? JSON.parse(evt.data) : evt;
+            writeLine(`${msg.FROM}: ${msg.MESSAGE}`)
         }
         function writeLine(text){
-        var message = document.createElement('div')
-        message.classList.add('message')
-        message.innerHTML= 'Test says: ' + text
-        messages.appendChild(message)
-        messages.scrollTop = messages.scrollHeight;
-        }
+            var message = document.createElement('div')
+            message.classList.add('message')
+            //code for geting tone of the text is here
+            getJSON('http://localhost:5000/analyze/' + encodeURIComponent(text),
+                function(err, data) {
+                text = "";
+                if (err !== null) {
+                    console.log('Something went wrong: ' + err);
+                } else {
+                    var emotionsRecievedArray = data.tones;
+                    emotionsRecievedArray.forEach(element => {
+                        text += element.tone_name + " "
+                    });
+                    message.innerHTML= 'Emotions of this Text are: ' + text
+                }
+                });
+            messages.appendChild(message)
+            messages.scrollTop = messages.scrollHeight;
+            }
+            function getJSON(url, callback) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+                xhr.responseType = 'json';
+                xhr.onload = function() {
+                var status = xhr.status;
+                if (status === 200) {
+                    callback(null, xhr.response);
+                } else {
+                    callback(status, xhr.response);
+                }
+            };
+    xhr.send();
+};
+
     </script>
   </body>
 </html>

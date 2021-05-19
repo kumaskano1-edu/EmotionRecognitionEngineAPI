@@ -1,0 +1,26 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumaskano1-edu/ExpressNodeBoilerplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kumaskano1-edu/ExpressNodeBoilerplate/issues"
+  },
+  "homepage": "https://github.com/kumaskano1-edu/ExpressNodeBoilerplate#readme",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "uuid": "^8.3.2"
+  }
+}

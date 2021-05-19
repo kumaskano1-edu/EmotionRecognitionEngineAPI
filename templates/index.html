@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style/index.css">
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Emotion Recognition Engine</h1>
+    <div class="container">
+       <div class="messages">
+       </div>
+       <div class="input">
+          <input type="text" placeholder="Type message here!"/>
+    
+          <div class="btn btn-dark">Send</div>
+       </div>
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    
+    <script type="text/javascript">
+        var messages = document.querySelector('.messages')
+        var btn = document.querySelector('.btn')
+        var input = document.querySelector('.input input')
+        var emojiholder = document.querySelector('.emoji-holder')
+        var emojiwrapper = document.querySelector('.emoji-wrapper')
+        var emojibtn = document.querySelector('.emoji-btn')
+
+        // Button/Enter Key
+        btn.addEventListener('click', sendMessage)
+        input.addEventListener('keyup', function(evt){ if(evt.keyCode == 13) sendMessage() })
+        emojibtn.addEventListener('click', function(e){
+        e.stopPropagation()
+        this.classList.toggle('open')
+        })
+        document.body.addEventListener('click', function(){
+        emojibtn.classList.remove('open')
+        })
+
+        // Messenger Functions
+        function sendMessage(){
+        var msg = input.value;
+        input.value = ''
+        writeLine(msg)
+        }
+        function addMessage(evt){
+        console.log(evt);
+        var msg = evt.data ? JSON.parse(evt.data) : evt;
+        writeLine(`${msg.FROM}: ${msg.MESSAGE}`)
+        }
+        function writeLine(text){
+        var message = document.createElement('div')
+        message.classList.add('message')
+        message.innerHTML= 'Test says: ' + text
+        messages.appendChild(message)
+        messages.scrollTop = messages.scrollHeight;
+        }
+    </script>
+  </body>
+</html>

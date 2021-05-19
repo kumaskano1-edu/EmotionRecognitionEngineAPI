@@ -7,6 +7,15 @@ const PORT = process.env.PORT || 5000; //Declare the port number
 
 app.use(express.json());    //allows us to access request body as req.body
 app.use(morgan("dev"));     //enable incoming request logging in dev mode
+app.use("/static", express.static(__dirname + "/static"));
+
+
+
+//Routes
+
+app.get("/", (req, res) => {
+    return res.sendFile('templates/index.html', {root: __dirname});
+});
 
 app.get("/ping", (req, res) => {   //Define the endpoint
 
